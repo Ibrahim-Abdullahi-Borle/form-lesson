@@ -1,22 +1,30 @@
-document.getElementById("userForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-});
+document
+        .getElementById("userForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-const userData = {
-  name: document.getElementById("name").value,
-  email: document.getElementById("email").value,
-  phone: document.getElementById("phone").value,
-  message: document.getElementById("message").value,
-};
-
-// we are sending data to the server
-fetch("http//localhost:3000/users", {
-    // means we are sending data to the server
-    method: "POST",
-    // tells that we are sending JSON data
-    headers: {
-        "content-Type": "application/json",
-    },
-    // converts object to json
-    body: JSON.stringify(userData),
-})
+          const userData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            message: document.getElementById("message").value,
+          }
+          fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              document.getElementById("responseMsg").textContent =
+                "Data submitted successfully!";
+              document.getElementById("userForm").reset();
+            })
+            .catch((err) => {
+              document.getElementById("responseMsg").textContent =
+                "Submission failed!";
+              console.error(err);
+           });
+          });
